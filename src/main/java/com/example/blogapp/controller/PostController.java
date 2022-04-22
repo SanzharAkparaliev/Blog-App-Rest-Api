@@ -3,6 +3,7 @@ package com.example.blogapp.controller;
 import com.example.blogapp.impl.PostServiceImpl;
 import com.example.blogapp.payloads.ApiResponse;
 import com.example.blogapp.payloads.PostDto;
+import com.example.blogapp.payloads.PostResponse;
 import com.example.blogapp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,12 +37,12 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPost(
-            @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue = "4") Integer pageSize
+    public ResponseEntity<PostResponse> getAllPost(
+            @RequestParam(value = "pageNumber",defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize
     ){
-        List<PostDto> postDtos = postService.getAllPost(pageNumber,pageSize);
-        return new ResponseEntity<>(postDtos,HttpStatus.OK);
+      PostResponse postResponse = postService.getAllPost(pageNumber,pageSize);
+        return new ResponseEntity<>(postResponse,HttpStatus.OK);
     }
 
     @GetMapping("/posts/{postId}")
